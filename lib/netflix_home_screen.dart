@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:palette_generator/palette_generator.dart';
 import 'dart:ui';
 import 'models/movie.dart';
 import 'widgets/custom_app_bar.dart';
@@ -27,30 +28,47 @@ class _NetflixHomeScreenState extends State<NetflixHomeScreen>
   @override
   void initState() {
     super.initState();
-    _scrollController = ScrollController();
+
     _backgroundColorController = AnimationController(
       duration: const Duration(milliseconds: 800),
       vsync: this,
     );
-
+    // temporary until palette loads
     _backgroundColorAnimation = ColorTween(
-      begin: Movie.featuredMovie.dominantColor,
+      begin: Colors.black,
       end: Colors.black,
-    ).animate(CurvedAnimation(
-      parent: _backgroundColorController,
-      curve: Curves.easeInOut,
-    ));
+    ).animate(_backgroundColorController);
 
-    _scrollController.addListener(_onScroll);
+    _scrollController = ScrollController()..addListener(_onScroll);
+
+    _extractDominantColor();
+  }
+
+  Future<void> _extractDominantColor() async {
+    final palette = await PaletteGenerator.fromImageProvider(
+      NetworkImage(Movie.featuredMovie.backdropUrl),
+      size: const Size(200, 100),
+      maximumColorCount: 20,
+    );
+    final color = palette.dominantColor?.color ?? Colors.black;
+
+    setState(() {
+      Movie.featuredMovie.dominantColor = color;
+      _backgroundColorAnimation = ColorTween(
+        begin: color,
+        end: Colors.black,
+      ).animate(
+        CurvedAnimation(
+          parent: _backgroundColorController,
+          curve: Curves.easeInOut,
+        ),
+      );
+    });
   }
 
   void _onScroll() {
-    setState(() {
-      _scrollOffset = _scrollController.offset;
-    });
-
-    // Update background color animation based on scroll
-    final double progress = (_scrollOffset / 400).clamp(0.0, 1.0);
+    setState(() => _scrollOffset = _scrollController.offset);
+    final progress = (_scrollOffset / 400).clamp(0.0, 1.0);
     _backgroundColorController.animateTo(progress);
   }
 
@@ -76,8 +94,7 @@ class _NetflixHomeScreenState extends State<NetflixHomeScreen>
       animation: _backgroundColorAnimation,
       builder: (context, child) {
         return Scaffold(
-          backgroundColor: _backgroundColorAnimation.value ?? Colors.black,
-          body: Stack(
+          backgroundColor: _backgroundColorAnimation.value,          body: Stack(
             children: [
               // Main Content
               CustomScrollView(

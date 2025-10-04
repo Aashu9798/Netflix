@@ -9,7 +9,8 @@ class Movie {
   final double rating;
   final int year;
   final List<String> genres;
-  final Color dominantColor;
+  // final Color dominantColor;
+  Color? dominantColor;
 
   Movie({
     required this.id,
@@ -20,7 +21,7 @@ class Movie {
     required this.rating,
     required this.year,
     required this.genres,
-    required this.dominantColor,
+    this.dominantColor,
   });
 
   static final List<Movie> trendingMovies = [
@@ -33,7 +34,7 @@ class Movie {
       rating: 8.7,
       year: 2016,
       genres: ['Drama', 'Fantasy', 'Horror'],
-      dominantColor: Color(0xFF8B1538),
+      // dominantColor: Color(0xFF8B1538),
     ),
     Movie(
       id: '2',
@@ -44,7 +45,7 @@ class Movie {
       rating: 8.2,
       year: 2019,
       genres: ['Action', 'Adventure', 'Drama'],
-      dominantColor: Color(0xFF2C1810),
+      // dominantColor: Color(0xFF2C1810),
     ),
   ];
 
@@ -58,7 +59,7 @@ class Movie {
       rating: 8.6,
       year: 2016,
       genres: ['Biography', 'Drama', 'History'],
-      dominantColor: Color(0xFF2E4A2E),
+      // dominantColor: Color(0xFF2E4A2E),
     ),
     Movie(
       id: '4',
@@ -69,7 +70,7 @@ class Movie {
       rating: 8.3,
       year: 2017,
       genres: ['Action', 'Crime', 'Mystery'],
-      dominantColor: Color(0xFF8B0000),
+      // dominantColor: Color(0xFF8B0000),
     ),
   ];
 
@@ -82,6 +83,6 @@ class Movie {
     rating: 8.1,
     year: 2022,
     genres: ['Comedy', 'Crime', 'Family'],
-    dominantColor: Color(0xFF1A1A2E),
+    // dominantColor: Color(0xFF1A1A2E),
   );
 }
