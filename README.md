@@ -155,7 +155,3 @@ To make this production-ready, consider adding:
 - More detailed movie screens
 
 ---
-
-**Ready to impress your interviewer!** 🎬✨
-
-This implementation showcases advanced Flutter concepts including custom animations, glassmorphism effects, scroll-based interactions, and professional UI design patterns.
