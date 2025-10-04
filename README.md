@@ -58,7 +58,7 @@ lib/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/aashu9798/knovator_posts_app.git
+   git clone https://github.com/Aashu9798/Netflix.git
    cd knovator_posts_app
    ```
 
